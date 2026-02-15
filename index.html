@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barley Multi-purpose | Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .red-accent { color: #FF0000; }
+        .bg-red-accent { background-color: #FF0000; }
+        
+        /* Ensures 1:1 Aspect Ratio for Images */
+        .image-container {
+            width: 100%;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            position: relative;
+            background-color: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Crops to fill square without stretching */
+        }
+        .product-card {
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            border-color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="bg-white text-black py-4 px-6 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-black italic border-2 border-red-600">B</div>
+                <span class="font-black text-xl tracking-tighter uppercase">Barley <span class="text-red-600">Multi-purpose</span></span>
+            </div>
+            <button onclick="toggleCart()" class="font-bold text-lg hover:text-red-600 transition-colors">
+                Cart [<span id="cart-count">0</span>]
+            </button>
+        </div>
+    </nav>
+
+    <header class="py-16 text-center border-b border-zinc-900 bg-zinc-950">
+        <h1 class="text-5xl font-black mb-2 uppercase tracking-tighter">Premium <span class="text-red-600">Cleaning</span></h1>
+        <p class="text-zinc-500 font-medium">Order via WhatsApp • Fast Delivery</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <div class="product-card bg-zinc-900/50 p-4 rounded-lg">
+                <div class="image-container mb-4">
+                    <img src="imgV1.jpg" alt="1L Dishwasher">
+                </div>
+                <h3 class="text-xl font-bold uppercase italic">1 Litre Dishwasher</h3>
+                <p class="text-red-600 font-black text-2xl mb-4">R40</p>
+                <div class="flex gap-2">
+                    <select id="qty1" class="bg-black border border-zinc-700 text-white p-2 rounded w-24 focus:border-red-600 outline-none"></select>
+                    <button onclick="addToCart('1 Litre Dishwasher', 40, 'qty1')" class="flex-1 bg-red-accent text-white font-black py-3 rounded uppercase hover:bg-red-700 transition">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-zinc-900/50 p-4 rounded-lg">
+                <div class="image-container mb-4">
+                    <img src="imgV2.jpg" alt="5L Pine Gel">
+                </div>
+                <h3 class="text-xl font-bold uppercase italic">5 Litre Pine Gel</h3>
+                <p class="text-red-600 font-black text-2xl mb-4">R155</p>
+                <div class="flex gap-2">
+                    <select id="qty2" class="bg-black border border-zinc-700 text-white p-2 rounded w-24 focus:border-red-600 outline-none"></select>
+                    <button onclick="addToCart('5 Litre Pine Gel', 155, 'qty2')" class="flex-1 bg-red-accent text-white font-black py-3 rounded uppercase hover:bg-red-700 transition">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-zinc-900/50 p-4 rounded-lg">
+                <div class="image-container mb-4">
+                    <img src="imgV3.jpg" alt="750ml APC">
+                </div>
+                <h3 class="text-xl font-bold uppercase italic">750ml All Purpose Cleaner</h3>
+                <p class="text-red-600 font-black text-2xl mb-4">R30</p>
+                <div class="flex gap-2">
+                    <select id="qty3" class="bg-black border border-zinc-700 text-white p-2 rounded w-24 focus:border-red-600 outline-none"></select>
+                    <button onclick="addToCart('750ml All Purpose Cleaner', 30, 'qty3')" class="flex-1 bg-red-accent text-white font-black py-3 rounded uppercase hover:bg-red-700 transition">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-zinc-900/50 p-4 rounded-lg">
+                <div class="image-container mb-4">
+                    <img src="imgV4.jpg" alt="750ml Bleach">
+                </div>
+                <h3 class="text-xl font-bold uppercase italic">750ml Thick Bleach</h3>
+                <p class="text-red-600 font-black text-2xl mb-4">R30</p>
+                <div class="flex gap-2">
+                    <select id="qty4" class="bg-black border border-zinc-700 text-white p-2 rounded w-24 focus:border-red-600 outline-none"></select>
+                    <button onclick="addToCart('750ml Thick Bleach', 30, 'qty4')" class="flex-1 bg-red-accent text-white font-black py-3 rounded uppercase hover:bg-red-700 transition">Add to Cart</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="cart-modal" class="fixed inset-0 bg-black/95 z-[60] hidden flex items-center justify-center p-6">
+        <div class="bg-zinc-900 border-2 border-red-600 w-full max-w-lg p-8 rounded-lg shadow-2xl">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-black uppercase italic text-white">Your Order</h2>
+                <button onclick="toggleCart()" class="text-zinc-500 hover:text-red-600 text-2xl font-bold">✕</button>
+            </div>
+            <div id="cart-items" class="mb-8 max-h-72 overflow-y-auto space-y-4 pr-2">
+                </div>
+            <div class="border-t border-zinc-800 pt-6 mb-8">
+                <div class="flex justify-between items-center">
+                    <span class="text-zinc-400 font-bold uppercase">Estimated Total</span>
+                    <span id="cart-total" class="text-3xl font-black text-red-600">R0</span>
+                </div>
+            </div>
+            <button onclick="checkout()" class="w-full bg-green-600 hover:bg-green-500 text-white font-black py-5 rounded uppercase tracking-widest transition shadow-lg">
+                Confirm & Send to WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-white text-black py-16 px-6 mt-20">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <h4 class="font-black text-2xl uppercase tracking-tighter">Barley <span class="text-red-600">Multi-purpose</span></h4>
+                <p class="text-zinc-500">Quality cleaning products for every home.</p>
+            </div>
+            <div class="text-center font-bold">
+                <p>Order Support: 082 459 8656</p>
+                <p class="text-red-600">WhatsApp Orders Only</p>
+            </div>
+            <div class="text-zinc-400 text-xs">
+                © 2026 Barley Multi-purpose.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        // Fill dropdowns with 1-24
+        const selects = ['qty1', 'qty2', 'qty3', 'qty4'];
+        selects.forEach(id => {
+            const select = document.getElementById(id);
+            for(let i = 1; i <= 24; i++) {
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.innerHTML = `Qty: ${i}`;
+                select.appendChild(opt);
+            }
+        });
+
+        function addToCart(name, price, qtyId) {
+            const quantity = parseInt(document.getElementById(qtyId).value);
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ name, price, quantity });
+            }
+            updateCartUI();
+            toggleCart(); // Automatically open cart to show progress
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((acc, item) => acc + item.quantity, 0);
+            document.getElementById('cart-count').innerText = totalQty;
+            
+            const itemsContainer = document.getElementById('cart-items');
+            const totalContainer = document.getElementById('cart-total');
+            
+            itemsContainer.innerHTML = cart.length === 0 ? '<p class="text-zinc-600 italic">Your cart is currently empty...</p>' : '';
+            
+            let total = 0;
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                itemsContainer.innerHTML += `
+                    <div class="flex justify-between items-center bg-zinc-800/50 p-3 rounded">
+                        <div>
+                            <p class="font-bold uppercase text-sm">${item.name}</p>
+                            <p class="text-zinc-400 text-xs">${item.quantity} x R${item.price}</p>
+                        </div>
+                        <span class="font-black text-red-600">R${subtotal}</span>
+                    </div>
+                `;
+            });
+            totalContainer.innerText = `R${total}`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function checkout() {
+            if (cart.length === 0) return alert("Please add items to your cart first.");
+
+            let total = 0;
+            let itemDetails = "";
+            
+            cart.forEach(item => {
+                itemDetails += `%0A- ${item.name} (x${item.quantity})`;
+                total += (item.price * item.quantity);
+            });
+
+            const businessName = "Barley Multi-purpose";
+            const message = `*ORDER FROM ${businessName.toUpperCase()}*%0A%0AItems Ordered:${itemDetails}%0A%0A*TOTAL AMOUNT: R${total}*`;
+            
+            window.open(`https://wa.me/27824598656?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
